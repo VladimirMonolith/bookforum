@@ -1,0 +1,14 @@
+fastapi[all]
+SQLAlchemy==2.0.29
+alembic==1.13.1
+asyncpg==0.29.0
+fastapi-versioning== 0.10.0
+python-json-logger==2.0.7
+fastapi-users[sqlalchemy]
+fastapi-cache2[redis]
+sqladmin==0.16.1
+celery==5.4.0
+flower==2.0.1
+sentry-sdk[fastapi]
+gunicorn==22.0.0
+prometheus-fastapi-instrumentator==7.0.0
