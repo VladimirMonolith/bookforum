@@ -117,5 +117,3 @@ instrumentator = Instrumentator(
     excluded_handlers=['.*admin.*', '/metrics'],
 )
 instrumentator.instrument(app).expose(app)
-
-
