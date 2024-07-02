@@ -1,22 +1,22 @@
 # Cервис Bookforum
 
-[![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/-FastAPI-464646?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com/)
-[![Асинхронность](https://img.shields.io/badge/-Асинхронность-464646?style=flat-square&logo=Асинхронность)]()
-[![Cookies](https://img.shields.io/badge/-Cookies-464646?style=flat-square&logo=Cookies)]()
-[![JWT](https://img.shields.io/badge/-JWT-464646?style=flat-square&logo=JWT)]()
-[![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-464646?style=flat-square&logo=PostgreSQL)](https://www.postgresql.org/)
-[![Alembic](https://img.shields.io/badge/-Alembic-464646?style=flat-square&logo=Alembic)](https://alembic.sqlalchemy.org/en/latest/)
-[![SQLAlchemy](https://img.shields.io/badge/-SQLAlchemy-464646?style=flat-square&logo=SQLAlchemy)](https://www.sqlalchemy.org/)
-[![Docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
-[![Redis](https://img.shields.io/badge/-Redis-464646?style=flat-square&logo=Redis)](https://redis.io/)
-[![Celery](https://img.shields.io/badge/-Celery-464646?style=flat-square&logo=Celery)](https://docs.celeryq.dev/en/stable/)
-[![Sentry](https://img.shields.io/badge/-Sentry-464646?style=flat-square&logo=Sentry)](https://sentry.io/welcome/)
-[![Prometheus](https://img.shields.io/badge/-Prometheus-464646?style=flat-square&logo=Prometheus)](https://prometheus.io/)
-[![Grafana](https://img.shields.io/badge/-Grafana-464646?style=flat-square&logo=Grafana)](https://grafana.com/)
-![Nginx](https://img.shields.io/badge/NGINX-464646?style=flat-square&logo=nginx&logoColor=white)
-[![Uvicorn](https://img.shields.io/badge/-Uvicorn-464646?style=flat-square&logo=uvicorn)](https://www.uvicorn.org/)
-[![Gunicorn](https://img.shields.io/badge/-Gunicorn-464646?style=flat-square&logo=gunicorn)](https://gunicorn.org/)
+![Python](https://img.shields.io/badge/Python-464646?style=flat-square&logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-464646?style=flat-square&logo=fastapi)
+![Асинхронность](https://img.shields.io/badge/Асинхронность-464646?style=flat-square)
+![Cookies](https://img.shields.io/badge/Cookies-464646?style=flat-square)
+![JWT](https://img.shields.io/badge/JWT-464646?style=flat-square&logo=JSON%20web%20tokens)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-464646?style=flat-square&logo=postgreSQL)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-464646?style=flat-square&logo=sqlalchemy)
+![Alembic](https://img.shields.io/badge/Alembic-464646?style=flat-square)
+![Docker](https://img.shields.io/badge/Docker-464646?style=flat-square&logo=docker)
+![Redis](https://img.shields.io/badge/Redis-464646?style=flat-square&logo=redis)
+![Celery](https://img.shields.io/badge/Celery-464646?style=flat-square&logo=celery)
+![Sentry](https://img.shields.io/badge/-Sentry-464646?style=flat-square&logo=sentry)
+![Prometheus](https://img.shields.io/badge/-Prometheus-464646?style=flat-square&logo=prometheus)
+![Grafana](https://img.shields.io/badge/-Grafana-464646?style=flat-square&logo=grafana)
+![NGINX](https://img.shields.io/badge/NGINX-464646?style=flat-square&logo=nginx)
+![Uvicorn](https://img.shields.io/badge/Uvicorn-464646?style=flat-square)
+![Gunicorn](https://img.shields.io/badge/Gunicorn-464646?style=flat-square&logo=gunicorn)
 
 ## Описание
 
@@ -30,10 +30,11 @@ API книжного форума.
 - Создание объектов разрешено только аутентифицированным пользователям.
 - Возможность получения подробной информации о себе.
 - Загрузка тестовых данных в БД.
-- Возможность осуществить операции CRUD для категорий.
-- Возможность получить список всех товаров подкатегории и выполнить операции CRUD.
-- Возможность получить подробную информацию о товаре и выполнить операции CRUD.
-- Отправка email с подтверждением покупки пользователя посредством Celery.
+- Возможность получить подробную информацию о конкретной книге и выполнить операции CRUD.
+- Возможность осуществить операции CRUD для жанров.
+- Возможность осуществить операции CRUD для отзывов конкретного пользователя.
+- Управление пользователями с помощью функционала библиотеки fastapi-users.
+- Отправка email с подтверждением отзыва пользователя посредством Celery.
 - Возможность администрирования сервиса.
 - Версионирование API.
 - Кеширование/брокер задач с помощью Redis.
@@ -42,10 +43,11 @@ API книжного форума.
 - Сбор метрик с помощью Prometheus.
 - Визуализация метрик посредством Grafana.
 - Возможность развернуть проект в Docker-контейнерах.
+- Возможность использовать NGINX при развертывании проекта в Docker-контейнерах, на VPS или выделенном сервере.
 
 #### Локально документация доступна по адресу: <http://localhost:8000/v1/docs/>
 
-#### В контейнерах Docker документация доступна по адресу: <<http://localhost>:???? /v1/docs/>  
+#### В контейнерах Docker документация доступна по адресу: <http://localhost:7777/v1/docs/>  
 
 #### Технологии
 
@@ -67,6 +69,7 @@ API книжного форума.
 - Sentry
 - Prometheus
 - Grafana
+- NGINX
 - Uvicorn
 - Gunicorn
 
@@ -183,4 +186,4 @@ target_metadata = Base.metadata
     celery -A app.tasks.tasks:celery flower
 ```
 
-docker-compose up --build
+Добавить описание запуска в контейнерах

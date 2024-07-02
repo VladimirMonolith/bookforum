@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from fastapi_cache.decorator import cache
 from fastapi_versioning import version
 
@@ -9,6 +9,7 @@ from app.exceptions import (
     NotFoundException,
     ObjectAlreadyExistsException
 )
+from app.rate_limiting import limiter
 from app.users.manager import current_superuser
 from app.users.models import User
 
@@ -43,7 +44,8 @@ async def create_book(
 @router.get('', response_model=List[BookRead])
 @version(1)
 @cache(expire=60)
-async def get_all_books():
+@limiter.limit('1/minute')
+async def get_all_books(request: Request):
     """Возвращает все книги."""
     books = await BookDAO.get_all_objects()
 

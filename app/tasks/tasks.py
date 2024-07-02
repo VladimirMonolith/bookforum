@@ -14,7 +14,7 @@ def send_review_confirmation_email(
     email_to: EmailStr,
     book_title: str
 ):
-    """Отправляет email с подтверждением бронирования."""
+    """Отправляет email с подтверждением отзыва."""
     email_to_user = settings.SMTP_USER
     email_content = create_review_confirmation_template(
         review=review, username=username,
