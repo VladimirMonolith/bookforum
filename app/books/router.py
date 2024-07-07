@@ -44,8 +44,7 @@ async def create_book(
 @router.get('', response_model=List[BookRead])
 @version(1)
 @cache(expire=60)
-@limiter.limit('1/minute')
-async def get_all_books(request: Request):
+async def get_all_books():
     """Возвращает все книги."""
     books = await BookDAO.get_all_objects()
 
@@ -56,7 +55,8 @@ async def get_all_books(request: Request):
 
 @router.get('/{book_id}', response_model=BookReadDetail)
 @version(1)
-async def get_book(book_id: int):
+@limiter.limit('1/minute')
+async def get_book(book_id: int, request: Request):
     """Возвращает подробную информацию о конкретной книге."""
     book = await BookDAO.get_book_with_details(book_id=book_id)
 

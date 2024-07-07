@@ -38,6 +38,7 @@ API книжного форума.
 - Возможность администрирования сервиса.
 - Версионирование API.
 - Кеширование/брокер задач с помощью Redis.
+- Для защиты от DDoS-атак используется библиотека slowapi
 - Логирование посредством кастомного логгера.
 - Мониторинг ошибок с помощью Sentry.
 - Сбор метрик с помощью Prometheus.
@@ -186,4 +187,24 @@ target_metadata = Base.metadata
     celery -A app.tasks.tasks:celery flower
 ```
 
-Добавить описание запуска в контейнерах
+#### Запуск в контейнерах Docker
+
+- Находясь в главной директории проекта:
+
+- Создать файл .env-docker по образцу:
+
+```bash
+   cp .env_docker_example .env_docker 
+```
+
+- Запустить проект:
+
+``` bash
+    docker-compose up -d --build  
+```
+
+#### Полный список запросов API находится в документации
+
+#### Автор
+
+Гут Владимир - [https://github.com/VladimirMonolith](http://github.com/VladimirMonolith)

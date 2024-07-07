@@ -37,7 +37,6 @@ class Settings(BaseSettings):
                 f'{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:'
                 f'{self.POSTGRES_PORT}/{self.POSTGRES_DB_NAME}')
 
-    # для локальной разработки
     model_config = SettingsConfigDict(env_file='.env')
 
 

@@ -1,16 +1,19 @@
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.errors import RateLimitExceeded
-from slowapi.middleware import SlowAPIMiddleware
+from slowapi import Limiter
 from slowapi.util import get_remote_address
+from app.config import settings
 
-from app.main import app
 
 limiter = Limiter(
     key_func=get_remote_address,
     application_limits=['1000/day'],
-    default_limits=['3/minute'],
+    default_limits=['20/minute'],
     enabled=True
 )
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-app.add_middleware(SlowAPIMiddleware)
+
+limiter = Limiter(
+    key_func=get_remote_address,
+    application_limits=['1000/day'],
+    default_limits=['20/minute'],
+    storage_uri=f'redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}',
+    enabled=True
+)

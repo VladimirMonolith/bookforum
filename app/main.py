@@ -8,6 +8,9 @@ from fastapi_cache.backends.redis import RedisBackend
 from fastapi_versioning import VersionedFastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 from redis import asyncio as aioredis
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 from sqladmin import Admin
 
 from app.admin.auth import authentication_backend
@@ -19,6 +22,7 @@ from app.genres.router import router as genres_router
 from app.import_test_data.router import router as test_data_router
 from app.logger import logger
 from app.prometheus.router import router as prometheus_router
+from app.rate_limiting import limiter
 from app.reviews.router import router as reviews_router
 from app.users.config import auth_backend
 from app.users.manager import fastapi_users
@@ -117,3 +121,7 @@ instrumentator = Instrumentator(
     excluded_handlers=['.*admin.*', '/metrics'],
 )
 instrumentator.instrument(app).expose(app)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)
