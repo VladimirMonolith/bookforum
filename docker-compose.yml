@@ -104,5 +104,6 @@ services:
 
 volumes:
   postgres_data:
+  # закомментируйте grafana_data, prometheus_data, если используете nginx
   grafana_data:
   prometheus_data:

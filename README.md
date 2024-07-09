@@ -46,10 +46,6 @@ API книжного форума.
 - Возможность развернуть проект в Docker-контейнерах.
 - Возможность использовать NGINX при развертывании проекта в Docker-контейнерах, на VPS или выделенном сервере.
 
-#### Локально документация доступна по адресу: <http://localhost:8000/v1/docs/>
-
-#### В контейнерах Docker документация доступна по адресу: <http://localhost:7777/v1/docs/>  
-
 #### Технологии
 
 - Python 3.9
@@ -81,7 +77,7 @@ API книжного форума.
 - Склонировать репозиторий:
 
 ```bash
-    git clone <название репозитория>
+git clone <название репозитория>
 ```
 
 Cоздать и активировать виртуальное окружение:
@@ -89,40 +85,33 @@ Cоздать и активировать виртуальное окружен�
 Команды для установки виртуального окружения на Mac или Linux:
 
 ```bash
-    python3 -m venv env
-    source env/bin/activate
+python3 -m venv env
+source env/bin/activate
 ```
 
 Команды для Windows:
 
 ```bash
-    python -m venv venv
-    source venv/Scripts/activate
-```
-
-- Перейти в директорию app:
-
-```bash
-    cd /app
+python -m venv venv
+source venv/Scripts/activate
 ```
 
 - Создать файл .env по образцу:
 
 ```bash
-    cp .env_local_example .env
+cp .env_local_example .env
 ```
 
 - Установить зависимости из файла requirements.txt:
 
 ```bash
-    cd ..
-    pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 - Для создания миграций выполнить команду:
 
 ```bash
-    alembic init migrations
+alembic init migrations
 ```
 
 - В папку migrations в env файл вставьте следующий код:
@@ -153,58 +142,68 @@ target_metadata = Base.metadata
 - Инициализировать БД:
 
 ``` bash
-    alembic revision --autogenerate -m "comment"   
+alembic revision --autogenerate -m "comment"   
 ```
 
 - Применить миграцию:
 
 ``` bash
-    alembic upgrade head 
+alembic upgrade head 
 ```
 
 - Запустить проект:
 
 ``` bash
-    uvicorn app.main:app --reload    
+uvicorn app.main:app --reload    
 ```
 
 - Запустить Redis:
 
 ``` bash
-    redis-server.exe 
-    redis-cli.exe  
+redis-server.exe 
+redis-cli.exe  
 ```
 
 - Запустить Celery:
 
 ``` bash
-    celery -A app.tasks.celery_config:celery worker --loglevel=INFO --pool=solo
+celery -A app.tasks.celery_config:celery worker --loglevel=INFO --pool=solo
 ```
 
 - Запустить Flower:
 
 ``` bash
-    celery -A app.tasks.tasks:celery flower
+celery -A app.tasks.tasks:celery flower
 ```
+
+##### Локально документация доступна по адресу: <http://localhost:8000/v1/docs/>
 
 #### Запуск в контейнерах Docker
 
 - Находясь в главной директории проекта:
 
-- Создать файл .env-docker по образцу:
+- Создать файл .env_docker по образцу:
 
 ```bash
-   cp .env_docker_example .env_docker 
+cp .env_docker_example .env_docker 
+```
+
+- **Если планируете задействовать NGINX:**
+
+```
+Согласно примечаниям в файле docker-compose.yml закомментируйте код внутри него
 ```
 
 - Запустить проект:
 
 ``` bash
-    docker-compose up -d --build  
+docker-compose up -d --build  
 ```
 
-#### Полный список запросов API находится в документации
+##### В контейнерах Docker документация доступна по адресу: <http://localhost:7777/v1/docs/>
 
-#### Автор
+##### Полный список запросов API находится в документации
+
+##### Автор
 
 Гут Владимир - [https://github.com/VladimirMonolith](http://github.com/VladimirMonolith)
