@@ -24,6 +24,8 @@ router = APIRouter(
 )
 
 
+# Вариант с Celery + Redis
+
 @router.post('')
 @version(1)
 async def create_review(
@@ -65,6 +67,49 @@ async def create_review(
     )
     return review
 
+
+# Вариант с aio-pika + RabbitMQ
+
+# @router.post('')
+# @version(1)
+# async def create_review(
+#     data: ReviewCreate, user: User = Depends(current_active_user)
+# ):
+#     """Позволяет добавить новый отзыв текущего пользователя."""
+#     review_exists = await ReviewDAO.get_object(
+#         user_id=user.id, book_id=data.book_id
+#     )
+
+#     if review_exists:
+#         raise ObjectAlreadyExistsException
+
+#     review = await ReviewDAO.add_review_object(
+#         text=data.text,
+#         book_id=data.book_id,
+#         user_id=user.id
+#     )
+
+#     if not review:
+#         raise DatabaseErrorException(
+#             detail='Не удалось добавить запись в базу данных.'
+#         )
+
+#     book = await BookDAO.get_object(id=data.book_id)
+
+#     if not book:
+#         raise NotFoundException
+
+#     review_dict = (
+#         TypeAdapter(ReviewRead).validate_python(review).model_dump()
+#     )
+
+#     await send_review_task_to_queue({
+#         'review': review_dict,
+#         'username': user.username,
+#         'email_to': user.email,
+#         'book_title': book.title
+#     })
+#     return review
 
 @router.get('', response_model=List[ReviewRead])
 @version(1)

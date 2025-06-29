@@ -1,0 +1,18 @@
+[
+    {
+        "username": "testuser",
+        "email": "test@test.com",
+        "first_name": "Test",
+        "last_name": "Testoff",
+        "registrated": "2023-04-01",
+        "hashed_password": "$2b$12$ib8N/MddMjSxNs4UOF69c.KuO4CyglQHcNATYpHcKJJn5rbltYNFG"
+    },
+    {
+        "username": "artm44",
+        "email": "artem@example.com",
+        "first_name": "Artem",
+        "last_name": "Ivanov",
+        "registrated": "2023-04-05",
+        "hashed_password": "$2b$12$SwAOsDqK7tjnvIcjlTAUvuX6K4xv/zUvqp8Y2oSCtqVv4f/XCB2Bi"
+    }
+]

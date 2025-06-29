@@ -17,6 +17,7 @@ services:
   #   links:
   #     - app
   #     - flower
+
   db:
     image: postgres:16
     container_name: db
@@ -37,6 +38,22 @@ services:
     ports:
       - 6379:6379
 
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    depends_on:
+      - db
+    env_file:
+      - .env_docker
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - 5672:5672 # порт AMQP
+      - 15672:15672 # web-интерфейс
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
   app:
     build:
       context: .
@@ -45,6 +62,7 @@ services:
     depends_on:
       - db
       - redis
+      - rabbitmq
     env_file:
       - .env_docker
     command: [ '/bookforum/docker/app.sh' ]
@@ -53,6 +71,7 @@ services:
     ports:
       - 7777:8000
 
+  # закомментируйте celery, если используете rabbitmq 
   celery:
     build:
       context: .
@@ -65,6 +84,7 @@ services:
     env_file:
       - .env_docker
 
+  # закомментируйте flower, если используете rabbitmq
   flower:
     build:
       context: .
@@ -81,6 +101,17 @@ services:
     ports:
       - 5555:5555
 
+  rabbitmq_consumer:
+    build:
+      context: .
+    container_name: rabbitmq_consumer
+    depends_on:
+      - rabbitmq
+      - app
+    env_file:
+      - .env_docker
+    command: [ 'python', 'app/tasks/consumer.py' ]
+
   # закомментируйте prometheus, если используете nginx    
   prometheus:
     image: prom/prometheus:v2.43.0
@@ -91,7 +122,7 @@ services:
     restart: unless-stopped
     ports:
       - 9090:9090
-  
+
   # закомментируйте grafana, если используете nginx 
   grafana:
     image: grafana/grafana:9.4.7
@@ -103,7 +134,7 @@ services:
       - 3000:3000
 
 volumes:
-  postgres_data:
-  # закомментируйте grafana_data, prometheus_data, если используете nginx
+  postgres_data: # закомментируйте grafana_data, prometheus_data, если используете nginx
   grafana_data:
   prometheus_data:
+  rabbitmq_data:

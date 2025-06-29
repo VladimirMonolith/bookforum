@@ -62,6 +62,7 @@ API книжного форума.
 - CORS
 - Redis
 - Celery
+- RabbitMQ
 - Flower
 - Sentry
 - Prometheus
@@ -69,6 +70,7 @@ API книжного форума.
 - NGINX
 - Uvicorn
 - Gunicorn
+- Pytest
 
 #### Локальный запуск проекта
 

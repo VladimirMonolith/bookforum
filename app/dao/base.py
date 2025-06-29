@@ -112,7 +112,13 @@ class BaseDAO:
                 query = select(cls.model).filter_by(**kwargs)
                 result = await session.execute(query)
                 result = result.scalar_one_or_none()
-                new_data = update_data.dict(exclude_unset=True)
+
+                # Поддержка Pydantic-схем
+                if hasattr(update_data, 'dict'):
+                    new_data = update_data.model_dump(exclude_unset=True)
+                # Поддержка обычных словарей
+                elif isinstance(update_data, dict):
+                    new_data = update_data
 
                 for key, value in new_data.items():
                     setattr(result, key, value)

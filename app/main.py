@@ -28,11 +28,11 @@ from app.users.config import auth_backend
 from app.users.manager import fastapi_users
 from app.users.schemas import UserCreate, UserRead, UserUpdate
 
-sentry_sdk.init(
-    dsn=f'{settings.SENTRY}',
-    traces_sample_rate=1.0,
-    profiles_sample_rate=1.0
-)
+# sentry_sdk.init(
+#     dsn=f'{settings.SENTRY}',
+#     traces_sample_rate=1.0,
+#     profiles_sample_rate=1.0
+# )
 
 app = FastAPI(title='bookforum')
 
@@ -125,4 +125,3 @@ instrumentator.instrument(app).expose(app)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
-

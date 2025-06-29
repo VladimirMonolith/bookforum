@@ -8,5 +8,7 @@ limiter = Limiter(
     application_limits=['1000/day'],
     default_limits=['20/minute'],
     storage_uri=f'redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}',
-    enabled=True
+    enabled=False
 )
+
+# enabled=True
